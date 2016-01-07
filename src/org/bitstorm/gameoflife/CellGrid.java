@@ -52,6 +52,7 @@ public interface CellGrid {
 	 * @return Enumerator over Cell.
 	 * @see Cell
 	 */
+	@SuppressWarnings("rawtypes")
 	public Enumeration getEnum();
 
 	/**

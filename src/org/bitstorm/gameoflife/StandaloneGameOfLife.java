@@ -54,6 +54,10 @@ import org.bitstorm.util.TextFileDialog;
  * @author Edwin Martin
  */
 public class StandaloneGameOfLife extends GameOfLife {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Frame appletFrame;
 	private String[] args;
 	private GameOfLifeGridIO gridIO;
@@ -72,6 +76,7 @@ public class StandaloneGameOfLife extends GameOfLife {
 	 * @param parent Parent frame.
 	 * @see java.applet.Applet#init()
 	 */
+	@SuppressWarnings("unused")
 	public void init( Frame parent ) {
 		appletFrame = parent;
 		getParams();
@@ -79,7 +84,6 @@ public class StandaloneGameOfLife extends GameOfLife {
 		// set background colour
 		setBackground(new Color(0x999999));
 
-		// TODO: casten naar interface
 		// create StandAloneGameOfLifeGrid
 		gameOfLifeGrid = new GameOfLifeGrid( cellCols, cellRows);
 		gridIO = new GameOfLifeGridIO( gameOfLifeGrid );
@@ -394,9 +398,9 @@ public class StandaloneGameOfLife extends GameOfLife {
 
 			grid.clear();
 
-			Enumeration enum = new LineEnumerator( text );
-			while ( enum.hasMoreElements() ) {
-				String line = (String) enum.nextElement();
+			Enumeration enums = new LineEnumerator( text );
+			while ( enums.hasMoreElements() ) {
+				String line = (String) enums.nextElement();
 				if ( line.startsWith("#") || line.startsWith("!") )
 					continue;
 				
