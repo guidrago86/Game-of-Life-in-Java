@@ -28,7 +28,12 @@ import java.util.StringTokenizer;
  * @author Edwin Martin
  *
  */
+@SuppressWarnings({ "deprecation" })
 public class AlertBox extends Dialog {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Button okButton;
 
 	/**

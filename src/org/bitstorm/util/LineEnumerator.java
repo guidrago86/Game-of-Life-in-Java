@@ -13,6 +13,7 @@ import java.util.Enumeration;
 // But nothing beats Python ;-)
 // for line in file("file.txt"):
 //	  # Process line
+@SuppressWarnings({"rawtypes" })
 public class LineEnumerator implements Enumeration {
 	private final String s;
 	private final String separator;

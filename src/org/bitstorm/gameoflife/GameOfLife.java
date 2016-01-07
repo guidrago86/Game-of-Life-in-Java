@@ -25,6 +25,10 @@ import java.awt.GridBagLayout;
  * @author Edwin Martin
  */
 public class GameOfLife extends Applet implements Runnable, GameOfLifeControlsListener {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	protected CellGridCanvas gameOfLifeCanvas;
 	protected GameOfLifeGrid gameOfLifeGrid;
 	protected int cellSize;

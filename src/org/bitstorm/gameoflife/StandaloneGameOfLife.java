@@ -53,6 +53,7 @@ import org.bitstorm.util.TextFileDialog;
  * 
  * @author Edwin Martin
  */
+@SuppressWarnings("unused")
 public class StandaloneGameOfLife extends GameOfLife {
 	/**
 	 * 
@@ -76,7 +77,6 @@ public class StandaloneGameOfLife extends GameOfLife {
 	 * @param parent Parent frame.
 	 * @see java.applet.Applet#init()
 	 */
-	@SuppressWarnings("unused")
 	public void init( Frame parent ) {
 		appletFrame = parent;
 		getParams();
@@ -220,7 +220,8 @@ public class StandaloneGameOfLife extends GameOfLife {
 	     * The file or URL has been dropped.
 	     * @see java.awt.dnd.DropTargetListener#drop(java.awt.dnd.DropTargetDropEvent)
 	     */
-	    public void drop(DropTargetDropEvent event) {
+	    @SuppressWarnings("rawtypes")
+		public void drop(DropTargetDropEvent event) {
 	    	// important to first try urlFlavor
 			if ( event.isDataFlavorSupported( urlFlavor ) ) {
 				try {
@@ -385,6 +386,7 @@ public class StandaloneGameOfLife extends GameOfLife {
 		 * @param name name of shape
 		 * @param text lines of text
 		 */
+		@SuppressWarnings({ "rawtypes", "unchecked" })
 		public Shape makeShape( String name, String text ) {
 			int col = 0;
 			int row = 0;
@@ -486,12 +488,17 @@ public class StandaloneGameOfLife extends GameOfLife {
  * @author Edwin Martin
  */
 class AppletFrame extends Frame {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private final GameOfLife applet;
     /**
      * Constructor.
 	 * @param title title of window
 	 * @param applet applet to show
 	 */
+	@SuppressWarnings("deprecation")
 	public AppletFrame(String title, StandaloneGameOfLife applet) {
         super( title );
 		this.applet = applet;

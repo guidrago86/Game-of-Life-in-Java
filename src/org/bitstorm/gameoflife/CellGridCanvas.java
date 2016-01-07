@@ -23,7 +23,12 @@ import java.util.Vector;
  * Communicates via CellGrid interface.
  * @author Edwin Martin
  */
+@SuppressWarnings({"rawtypes", "unused"})
 public class CellGridCanvas extends Canvas {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private boolean cellUnderMouse;
 	/**
 	 * Image for double buffering, to prevent flickering.
@@ -95,6 +100,7 @@ public class CellGridCanvas extends Canvas {
 	 * The grid is resized (by window resize or zooming).
 	 * Also apply post-resize properties when necessary
 	 */
+	@SuppressWarnings("deprecation")
 	public void resized() {
 		if ( newCellSize != 0 ) {
 			cellSize = newCellSize;
@@ -161,6 +167,7 @@ public class CellGridCanvas extends Canvas {
 	 * Draw this generation.
 	 * @see java.awt.Component#paint(java.awt.Graphics)
 	 */
+	
 	public void paint(Graphics g) {
 		// Draw grid on background image, which is faster
 		if (offScreenImageDrawed == null) {

@@ -21,6 +21,7 @@ import java.net.URL;
  * @author Edwin Martin
  *
  */
+@SuppressWarnings({ "deprecation" })
 public class EasyFile {
 	private String filepath;
 	private String filename;

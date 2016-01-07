@@ -21,6 +21,10 @@ import java.awt.image.ImageObserver;
  * @author Edwin Martin
  */
 public class ImageComponent extends Canvas implements ImageObserver {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Image image;
 
 	/**

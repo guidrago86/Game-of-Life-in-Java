@@ -10,6 +10,10 @@ import java.awt.Event;
  * @author Edwin Martin
  */
 public class GameOfLifeControlsEvent extends Event {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int speed;
 	private int zoom;
 	private String shapeName;

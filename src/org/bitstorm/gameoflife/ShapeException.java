@@ -12,6 +12,10 @@ package org.bitstorm.gameoflife;
  */
 public class ShapeException extends Exception {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	/**
 	 * Constructs a ShapeException.
 	 */
 	public ShapeException() {

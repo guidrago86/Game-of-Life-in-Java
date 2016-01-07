@@ -13,6 +13,7 @@ import java.util.Enumeration;
  *
  * @author Edwin Martin
  */
+@SuppressWarnings({"rawtypes" })
 public class Shape {
 	private final String name;
 	private final int[][] shape;

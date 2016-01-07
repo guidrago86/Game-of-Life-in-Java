@@ -10,31 +10,36 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 
 /**
- * Contains the cellgrid, the current shape and the Game Of Life algorithm that changes it.
+ * Contains the cellgrid, the current shape and the Game Of Life algorithm that
+ * changes it.
  *
  * @author Edwin Martin
  */
+@SuppressWarnings({ "unused", "rawtypes", "unchecked" })
 public class GameOfLifeGrid implements CellGrid {
 	private int cellRows;
 	private int cellCols;
 	private int generations;
 	private static Shape[] shapes;
 	/**
-	 * Contains the current, living shape.
-	 * It's implemented as a hashtable. Tests showed this is 70% faster than Vector.
+	 * Contains the current, living shape. It's implemented as a hashtable.
+	 * Tests showed this is 70% faster than Vector.
 	 */
 	private Hashtable currentShape;
 	private Hashtable nextShape;
 	/**
-	 * Every cell on the grid is a Cell object. This object can become quite large.
+	 * Every cell on the grid is a Cell object. This object can become quite
+	 * large.
 	 */
 	private Cell[][] grid;
 
 	/**
 	 * Contructs a GameOfLifeGrid.
 	 * 
-	 * @param cellCols number of columns
-	 * @param cellRows number of rows
+	 * @param cellCols
+	 *            number of columns
+	 * @param cellRows
+	 *            number of rows
 	 */
 	public GameOfLifeGrid(int cellCols, int cellRows) {
 		this.cellCols = cellCols;
@@ -43,9 +48,9 @@ public class GameOfLifeGrid implements CellGrid {
 		nextShape = new Hashtable();
 
 		grid = new Cell[cellCols][cellRows];
-		for ( int c=0; c<cellCols; c++)
-			for ( int r=0; r<cellRows; r++ )
-				grid[c][r] = new Cell( c, r );
+		for (int c = 0; c < cellCols; c++)
+			for (int r = 0; r < cellRows; r++)
+				grid[c][r] = new Cell(c, r);
 	}
 
 	/**
@@ -60,6 +65,7 @@ public class GameOfLifeGrid implements CellGrid {
 	/**
 	 * Create next generation of shape.
 	 */
+
 	public synchronized void next() {
 		Cell cell;
 		int col, row;
@@ -71,59 +77,63 @@ public class GameOfLifeGrid implements CellGrid {
 
 		// Reset cells
 		enums = currentShape.keys();
-		while ( enums.hasMoreElements() ) {
+		while (enums.hasMoreElements()) {
 			cell = (Cell) enums.nextElement();
 			cell.neighbour = 0;
 		}
 		// Add neighbours
-		// You can't walk through an hashtable and also add elements. Took me a couple of ours to figure out. Argh!
+		// You can't walk through an hashtable and also add elements. Took me a
+		// couple of ours to figure out. Argh!
 		// That's why we have a hashNew hashtable.
 		enums = currentShape.keys();
-		while ( enums.hasMoreElements() ) {
+		while (enums.hasMoreElements()) {
 			cell = (Cell) enums.nextElement();
 			col = cell.col;
 			row = cell.row;
-			addNeighbour( col-1, row-1 );
-			addNeighbour( col, row-1 );
-			addNeighbour( col+1, row-1 );
-			addNeighbour( col-1, row );
-			addNeighbour( col+1, row );
-			addNeighbour( col-1, row+1 );
-			addNeighbour( col, row+1 );
-			addNeighbour( col+1, row+1 );
+			addNeighbour(col - 1, row - 1);
+			addNeighbour(col, row - 1);
+			addNeighbour(col + 1, row - 1);
+			addNeighbour(col - 1, row);
+			addNeighbour(col + 1, row);
+			addNeighbour(col - 1, row + 1);
+			addNeighbour(col, row + 1);
+			addNeighbour(col + 1, row + 1);
 		}
-		
+
 		// Bury the dead
-		// We are walking through an enums from we are also removing elements. Can be tricky.
+		// We are walking through an enums from we are also removing elements.
+		// Can be tricky.
 		enums = currentShape.keys();
-		while ( enums.hasMoreElements() ) {
+		while (enums.hasMoreElements()) {
 			cell = (Cell) enums.nextElement();
 			// Here is the Game Of Life rule (1):
-			if ( cell.neighbour != 3 && cell.neighbour != 2 ) {
-				currentShape.remove( cell );
+			if (cell.neighbour != 3 && cell.neighbour != 2) {
+				currentShape.remove(cell);
 			}
 		}
 		// Bring out the new borns
 		enums = nextShape.keys();
-		while ( enums.hasMoreElements() ) {
+		while (enums.hasMoreElements()) {
 			cell = (Cell) enums.nextElement();
 			// Here is the Game Of Life rule (2):
-			if ( cell.neighbour == 3 ) {
-				setCell( cell.col, cell.row, true );
+			if (cell.neighbour == 3) {
+				setCell(cell.col, cell.row, true);
 			}
 		}
 	}
-	
+
 	/**
 	 * Adds a new neighbour to a cell.
 	 * 
-	 * @param col Cell-column
-	 * @param row Cell-row
+	 * @param col
+	 *            Cell-column
+	 * @param row
+	 *            Cell-row
 	 */
 	public synchronized void addNeighbour(int col, int row) {
 		try {
-			Cell cell = (Cell)nextShape.get( grid[col][row] );
-			if ( cell == null ) {
+			Cell cell = (Cell) nextShape.get(grid[col][row]);
+			if (cell == null) {
 				// Cell is not in hashtable, then add it
 				Cell c = grid[col][row];
 				c.neighbour = 1;
@@ -136,9 +146,10 @@ public class GameOfLifeGrid implements CellGrid {
 			// ignore
 		}
 	}
-	
+
 	/**
 	 * Get enumeration of Cell's
+	 * 
 	 * @see org.bitstorm.gameoflife.CellGrid#getEnum()
 	 */
 	public Enumeration getEnum() {
@@ -147,11 +158,14 @@ public class GameOfLifeGrid implements CellGrid {
 
 	/**
 	 * Get value of cell.
-	 * @param col x-coordinate of cell
-	 * @param row y-coordinate of cell
+	 * 
+	 * @param col
+	 *            x-coordinate of cell
+	 * @param row
+	 *            y-coordinate of cell
 	 * @return value of cell
 	 */
-	public synchronized boolean getCell( int col, int row ) {
+	public synchronized boolean getCell(int col, int row) {
 		try {
 			return currentShape.containsKey(grid[col][row]);
 		} catch (ArrayIndexOutOfBoundsException e) {
@@ -162,14 +176,18 @@ public class GameOfLifeGrid implements CellGrid {
 
 	/**
 	 * Set value of cell.
-	 * @param col x-coordinate of cell
-	 * @param row y-coordinate of cell
-	 * @param c value of cell
+	 * 
+	 * @param col
+	 *            x-coordinate of cell
+	 * @param row
+	 *            y-coordinate of cell
+	 * @param c
+	 *            value of cell
 	 */
-	public synchronized void setCell( int col, int row, boolean c ) {
+	public synchronized void setCell(int col, int row, boolean c) {
 		try {
 			Cell cell = grid[col][row];
-			if ( c ) {
+			if (c) {
 				currentShape.put(cell, cell);
 			} else {
 				currentShape.remove(cell);
@@ -178,54 +196,57 @@ public class GameOfLifeGrid implements CellGrid {
 			// ignore
 		}
 	}
-	
+
 	/**
 	 * Get number of generations.
+	 * 
 	 * @return number of generations
 	 */
 	public int getGenerations() {
 		return generations;
 	}
-	
+
 	/**
 	 * Get dimension of grid.
+	 * 
 	 * @return dimension of grid
 	 */
 	public Dimension getDimension() {
-		return new Dimension( cellCols, cellRows );
+		return new Dimension(cellCols, cellRows);
 	}
 
 	/**
 	 * Resize grid. Reuse existing cells.
+	 * 
 	 * @see org.bitstorm.gameoflife.CellGrid#resize(int, int)
 	 */
 	public synchronized void resize(int cellColsNew, int cellRowsNew) {
-		if ( cellCols==cellColsNew && cellRows==cellRowsNew )
+		if (cellCols == cellColsNew && cellRows == cellRowsNew)
 			return; // Not really a resize
 
 		// Create a new grid, reusing existing Cell's
 		Cell[][] gridNew = new Cell[cellColsNew][cellRowsNew];
-		for ( int c=0; c<cellColsNew; c++)
-			for ( int r=0; r<cellRowsNew; r++ )
-				if ( c < cellCols && r < cellRows )
+		for (int c = 0; c < cellColsNew; c++)
+			for (int r = 0; r < cellRowsNew; r++)
+				if (c < cellCols && r < cellRows)
 					gridNew[c][r] = grid[c][r];
 				else
-					gridNew[c][r] = new Cell( c, r );
+					gridNew[c][r] = new Cell(c, r);
 
 		// Copy existing shape to center of new shape
-		int colOffset = (cellColsNew-cellCols)/2;
-		int rowOffset = (cellRowsNew-cellRows)/2;
+		int colOffset = (cellColsNew - cellCols) / 2;
+		int rowOffset = (cellRowsNew - cellRows) / 2;
 		Cell cell;
 		Enumeration enums;
 		nextShape.clear();
 		enums = currentShape.keys();
-		while ( enums.hasMoreElements() ) {
+		while (enums.hasMoreElements()) {
 			cell = (Cell) enums.nextElement();
 			int colNew = cell.col + colOffset;
 			int rowNew = cell.row + rowOffset;
 			try {
-				nextShape.put( gridNew[colNew][rowNew], gridNew[colNew][rowNew] );
-			} catch ( ArrayIndexOutOfBoundsException e ) {
+				nextShape.put(gridNew[colNew][rowNew], gridNew[colNew][rowNew]);
+			} catch (ArrayIndexOutOfBoundsException e) {
 				// ignore
 			}
 		}
@@ -234,11 +255,11 @@ public class GameOfLifeGrid implements CellGrid {
 		grid = gridNew;
 		currentShape.clear();
 		enums = nextShape.keys();
-		while ( enums.hasMoreElements() ) {
+		while (enums.hasMoreElements()) {
 			cell = (Cell) enums.nextElement();
-			currentShape.put( cell, cell );
+			currentShape.put(cell, cell);
 		}
-		
+
 		cellCols = cellColsNew;
 		cellRows = cellRowsNew;
 	}

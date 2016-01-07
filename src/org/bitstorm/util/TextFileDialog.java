@@ -21,7 +21,13 @@ import java.io.IOException;
  *
  * @author Edwin Martin
  */
+@SuppressWarnings({ "deprecation" })
 public class TextFileDialog extends Dialog {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * Constructs a TextFileDialog.
 	 * @param parent parent frame
